@@ -1,0 +1,21 @@
+/* override notie styles here */
+.notie-container {
+  box-shadow: none;
+}
+
+.overflowr-visible {
+  overflow: visible !important;
+}
+
+.room-img {
+  max-width: 50%;
+}
+
+.my-footer {
+  height: 5em;
+  background-color: #163b65;
+  margin-top: 1.5em;
+  padding: 1em;
+  color: white;
+  font-size: 80%;
+}
