@@ -2,9 +2,9 @@ package render
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/caovanhoang63/bookings/pkg/config"
 	"github.com/caovanhoang63/bookings/pkg/models"
+	"github.com/justinas/nosurf"
 	"html/template"
 	"log"
 	"net/http"
@@ -21,11 +21,14 @@ func NewTemplate(a *config.AppConfig) {
 }
 
 // AddDefaultData get a TemplateData and return a default template data
-func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	//add CSRFToken to template data
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
-func RenderTemplate(w http.ResponseWriter, html string, td *models.TemplateData) {
+// RenderTemplate get a html page and render it
+func RenderTemplate(w http.ResponseWriter, r *http.Request, html string, td *models.TemplateData) {
 	html = strings.Trim(html, " ")
 	var tc map[string]*template.Template //declare template cache
 	var err error
@@ -47,7 +50,7 @@ func RenderTemplate(w http.ResponseWriter, html string, td *models.TemplateData)
 	//create new buffer memory for store template cache
 	buf := new(bytes.Buffer)
 
-	td = AddDefaultData(td)
+	td = AddDefaultData(td, r)
 
 	err = t.Execute(buf, td)
 	if err != nil {
@@ -61,12 +64,12 @@ func RenderTemplate(w http.ResponseWriter, html string, td *models.TemplateData)
 
 }
 
+// CreateTemplate create a template cache as a map,
+// key: page name, value: template (html template)
 func CreateTemplate() (map[string]*template.Template, error) {
-	log.Print("Create template cache conclude: ")
 	templateCache := make(map[string]*template.Template)
 	//get all the file named *page.html from ./templates
 	pages, err := filepath.Glob("./templates/*.page.html")
-	fmt.Println(pages)
 	if err != nil {
 
 		return templateCache, err
@@ -94,7 +97,6 @@ func CreateTemplate() (map[string]*template.Template, error) {
 			}
 		}
 		//append template to cache
-		fmt.Println(name)
 		templateCache[name] = ts
 	}
 	return templateCache, nil

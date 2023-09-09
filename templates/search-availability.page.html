@@ -1,0 +1,42 @@
+{{template "base" .}}
+
+{{define "header"}}
+    <title>Bookings</title>
+{{end}}
+
+{{define "content"}}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <h1 class="mt-5">Search for Availability</h1>
+                <form action="/search-availability" method="post" novalidate class="needs-validation">
+                    <input name="csrf_token" type="hidden" value="{{.CSRFToken}}">
+
+                    <div class="row" id="reservation_dates">
+                        <div class="col ">
+                            <div class="mb-3">
+                                <label for="start_date" class="form-label">Starting Date</label>
+                                <input type="text" required class="form-control" id="start" name="start"
+                                       aria-describedby="startDateHelp" placeholder="Arrival">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="end_date" class="form-label">Ending Date</label>
+                                <input type="text" required class="form-control " id="end" name="end"
+                                       aria-describedby="endDateHelp" placeholder="Departure">
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search Availability</button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+{{end}}

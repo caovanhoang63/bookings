@@ -6,6 +6,7 @@ import (
 )
 
 // NoSurf adds CSRF protection to all POST requests
+// All POST request must have CSRF token, if it doesn't have, it will be rejected
 func NoSurf(next http.Handler) http.Handler {
 	csrfHandler := nosurf.New(next)
 
