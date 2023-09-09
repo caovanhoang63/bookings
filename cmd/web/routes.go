@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/caovanhoang63/bookings/pkg/config"
-	"github.com/caovanhoang63/bookings/pkg/handlers"
+	"github.com/caovanhoang63/bookings/internal/config"
+	"github.com/caovanhoang63/bookings/internal/handlers"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 )
@@ -26,6 +26,7 @@ func routes(app *config.AppConfig) http.Handler {
 
 	//Handler for post request
 	mux.Post("/search-availability", handlers.Repo.PostAvailability)
+	mux.Get("/search-availability-json", handlers.Repo.AvailabilityJSON)
 
 	//File server
 	fileServer := http.FileServer(http.Dir("./static"))

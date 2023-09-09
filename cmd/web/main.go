@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/alexedwards/scs/v2"
-	"github.com/caovanhoang63/bookings/pkg/config"
-	"github.com/caovanhoang63/bookings/pkg/handlers"
-	"github.com/caovanhoang63/bookings/pkg/render"
+	"github.com/caovanhoang63/bookings/internal/config"
+	"github.com/caovanhoang63/bookings/internal/handlers"
+	"github.com/caovanhoang63/bookings/internal/render"
 	"html/template"
 	"log"
 	"net/http"
