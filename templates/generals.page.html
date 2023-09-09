@@ -61,7 +61,17 @@
                 </form> `;
             Prompt().custom({
                 msg: html,
-                title: "Choose your date"
+                title: "Choose your date",
+                callback: function (result){
+                    console.log("called")
+                    fetch("/search-availability-json")
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data.ok)
+                            console.log(data.message)
+                        })
+
+                }
             });
         });
     </script>

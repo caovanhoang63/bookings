@@ -215,7 +215,7 @@
                     title = "",
 
                 } = c;
-                const { value: formValues } = await Swal.fire({
+                const { value: result } = await Swal.fire({
                     title: title,
                     html: msg,
                     backdrop: false,
@@ -245,10 +245,24 @@
                         ]
                     }
                 })
-
-                if (formValues) {
-                    Swal.fire(JSON.stringify(formValues))
+                if (result) {
+                    //if user click ok button
+                    if (result.dismiss !== Swal.DismissReason.cancel ) {
+                        //if form has value
+                        if (result.value !== "") {
+                            //if form has a callback function
+                            if (c.callback !== undefined){
+                                //execute the callback function
+                                c.callback(result);
+                            }
+                        }else {
+                            c.callback(false)
+                        }
+                    }else {
+                        c.callback(false)
+                    }
                 }
+
             }
             return {
                 toast: toast,
