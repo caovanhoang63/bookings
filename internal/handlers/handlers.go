@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/caovanhoang63/bookings/internal/config"
+	"github.com/caovanhoang63/bookings/internal/forms"
 	"github.com/caovanhoang63/bookings/internal/models"
 	"github.com/caovanhoang63/bookings/internal/render"
 	"log"
@@ -79,7 +80,14 @@ func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
 
 // MakeReservation is the make-reservation page handler for GET request
 func (m *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "make-reservation.page.html", &models.TemplateData{})
+	render.RenderTemplate(w, r, "make-reservation.page.html", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+// PostReservation handles the posing of a reservation form
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+
 }
 
 //Handler for POST request
