@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/gob"
 	"github.com/alexedwards/scs/v2"
 	"github.com/caovanhoang63/bookings/internal/config"
 	"github.com/caovanhoang63/bookings/internal/handlers"
+	"github.com/caovanhoang63/bookings/internal/models"
 	"github.com/caovanhoang63/bookings/internal/render"
 	"html/template"
 	"log"
@@ -17,6 +19,10 @@ var app config.AppConfig
 var session *scs.SessionManager
 
 func main() {
+	//run
+	//what put in the session`
+	gob.Register(models.Reservation{})
+
 	//config application
 	app.UseCache = true
 
@@ -35,7 +41,6 @@ func main() {
 	var tc map[string]*template.Template
 	var err error
 	if app.UseCache {
-
 		tc, err = render.CreateTemplate()
 		if err != nil {
 			log.Fatal(err)
@@ -47,7 +52,9 @@ func main() {
 	render.NewTemplate(&app)
 	Repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(Repo)
-
+	if err != nil {
+		log.Fatal(err)
+	}
 	//Config server
 	srv := http.Server{
 		Addr:    portNumber,
@@ -57,4 +64,40 @@ func main() {
 	log.Println("Starting application on port:", portNumber)
 	_ = srv.ListenAndServe()
 
+}
+
+func run() error {
+	//what put in the session`
+	gob.Register(models.Reservation{})
+
+	//config application
+	app.UseCache = true
+
+	//change this to true when in production
+	app.InProduction = false
+
+	//config session
+	session = scs.New()
+	session.Lifetime = 24 * time.Hour
+	session.Cookie.Secure = app.InProduction
+	session.Cookie.Persist = true //the cookie stills alive when close browser tab
+	session.Cookie.SameSite = http.SameSiteLaxMode
+
+	app.Session = session
+
+	var tc map[string]*template.Template
+	var err error
+	if app.UseCache {
+		tc, err = render.CreateTemplate()
+		if err != nil {
+			return err
+		}
+		app.TemplateCache = tc
+	}
+
+	//Link AppConfig to components
+	render.NewTemplate(&app)
+	Repo := handlers.NewRepo(&app)
+	handlers.NewHandlers(Repo)
+	return nil
 }

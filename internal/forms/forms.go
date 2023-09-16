@@ -27,7 +27,6 @@ func (f *Form) Required(fields ...string) {
 			f.Errors.Add(field, "This field cannot be blank")
 		}
 	}
-
 }
 
 // New initializes a form struct
@@ -39,7 +38,7 @@ func New(data url.Values) *Form {
 }
 
 // Has checks if form field is in post and not empty
-func (f *Form) Has(field string, r *http.Request) bool {
+func Has(field string, r *http.Request) bool {
 	x := r.Form.Get(field)
 	if x == "" {
 		return false
@@ -48,8 +47,8 @@ func (f *Form) Has(field string, r *http.Request) bool {
 }
 
 // MinLength checks if form field is in post and not empty
-func (f *Form) MinLength(field string, length int, r *http.Request) bool {
-	x := r.Form.Get(field)
+func (f *Form) MinLength(field string, length int) bool {
+	x := f.Get(field)
 	if len(x) < length {
 		f.Errors.Add(field, fmt.Sprintf("This field must be at least %d characters long", length))
 		return false
