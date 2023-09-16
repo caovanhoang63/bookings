@@ -1,0 +1,12 @@
+mode: set
+github.com/caovanhoang63/bookings/cmd/web/main.go:21.13,24.16 2 0
+github.com/caovanhoang63/bookings/cmd/web/main.go:24.16,26.3 1 0
+github.com/caovanhoang63/bookings/cmd/web/main.go:28.2,34.26 3 0
+github.com/caovanhoang63/bookings/cmd/web/main.go:38.18,59.18 12 1
+github.com/caovanhoang63/bookings/cmd/web/main.go:59.18,61.17 2 1
+github.com/caovanhoang63/bookings/cmd/web/main.go:61.17,63.4 1 0
+github.com/caovanhoang63/bookings/cmd/web/main.go:64.3,64.25 1 1
+github.com/caovanhoang63/bookings/cmd/web/main.go:68.2,71.12 4 1
+github.com/caovanhoang63/bookings/cmd/web/middleware.go:10.45,20.2 3 1
+github.com/caovanhoang63/bookings/cmd/web/middleware.go:23.50,25.2 1 1
+github.com/caovanhoang63/bookings/cmd/web/routes.go:10.49,40.2 17 1

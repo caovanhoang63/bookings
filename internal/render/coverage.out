@@ -1,0 +1,26 @@
+mode: set
+github.com/caovanhoang63/bookings/internal/render/render.go:25.39,27.2 1 1
+github.com/caovanhoang63/bookings/internal/render/render.go:30.84,39.2 5 1
+github.com/caovanhoang63/bookings/internal/render/render.go:42.105,46.19 4 1
+github.com/caovanhoang63/bookings/internal/render/render.go:46.19,49.17 2 0
+github.com/caovanhoang63/bookings/internal/render/render.go:49.17,51.4 1 0
+github.com/caovanhoang63/bookings/internal/render/render.go:52.8,55.3 1 1
+github.com/caovanhoang63/bookings/internal/render/render.go:57.2,58.9 2 1
+github.com/caovanhoang63/bookings/internal/render/render.go:58.9,60.3 1 1
+github.com/caovanhoang63/bookings/internal/render/render.go:62.2,67.16 4 1
+github.com/caovanhoang63/bookings/internal/render/render.go:67.16,70.3 2 0
+github.com/caovanhoang63/bookings/internal/render/render.go:72.2,73.16 2 1
+github.com/caovanhoang63/bookings/internal/render/render.go:73.16,76.3 2 0
+github.com/caovanhoang63/bookings/internal/render/render.go:77.2,77.12 1 1
+github.com/caovanhoang63/bookings/internal/render/render.go:82.62,86.16 3 1
+github.com/caovanhoang63/bookings/internal/render/render.go:86.16,89.3 1 0
+github.com/caovanhoang63/bookings/internal/render/render.go:91.2,91.29 1 1
+github.com/caovanhoang63/bookings/internal/render/render.go:91.29,96.17 3 1
+github.com/caovanhoang63/bookings/internal/render/render.go:96.17,98.4 1 0
+github.com/caovanhoang63/bookings/internal/render/render.go:100.3,102.17 3 1
+github.com/caovanhoang63/bookings/internal/render/render.go:102.17,104.4 1 0
+github.com/caovanhoang63/bookings/internal/render/render.go:105.3,105.23 1 1
+github.com/caovanhoang63/bookings/internal/render/render.go:105.23,108.18 2 1
+github.com/caovanhoang63/bookings/internal/render/render.go:108.18,110.5 1 0
+github.com/caovanhoang63/bookings/internal/render/render.go:113.3,113.27 1 1
+github.com/caovanhoang63/bookings/internal/render/render.go:115.2,115.27 1 1

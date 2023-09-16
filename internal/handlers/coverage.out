@@ -1,0 +1,24 @@
+mode: set
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:23.47,27.2 1 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:30.33,32.2 1 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:42.67,46.2 1 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:49.68,51.2 1 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:54.70,58.2 1 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:61.71,65.2 1 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:68.68,72.2 1 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:75.75,79.2 1 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:82.78,91.2 4 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:94.78,96.16 2 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:96.16,98.3 1 0
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:100.2,114.19 7 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:114.19,122.3 4 0
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:124.2,126.65 2 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:130.81,132.9 2 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:132.9,137.3 4 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:138.2,143.4 3 0
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:149.79,153.16 4 1
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:153.16,155.3 1 0
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:164.79,170.16 3 0
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:170.16,172.3 1 0
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:173.2,176.16 4 0
+github.com/caovanhoang63/bookings/internal/handlers/handlers.go:176.16,178.3 1 0
