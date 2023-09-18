@@ -12,6 +12,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"time"
 )
@@ -22,6 +23,8 @@ var app config.AppConfig
 var session *scs.SessionManager
 var functions template.FuncMap
 var pathToTemplates = "./../../templates"
+var infoLog *log.Logger
+var errorLog *log.Logger
 
 func NoSurf(next http.Handler) http.Handler {
 	csrfHandler := nosurf.New(next)
@@ -59,7 +62,12 @@ func getRoutes() http.Handler {
 	session.Cookie.SameSite = http.SameSiteLaxMode
 
 	app.Session = session
+	//config logger
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
 
+	errorLog = log.New(os.Stdout, "Error\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
 	var tc map[string]*template.Template
 	var err error
 	if app.UseCache {

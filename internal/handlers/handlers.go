@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/caovanhoang63/bookings/internal/config"
 	"github.com/caovanhoang63/bookings/internal/forms"
+	"github.com/caovanhoang63/bookings/internal/helpers"
 	"github.com/caovanhoang63/bookings/internal/models"
 	"github.com/caovanhoang63/bookings/internal/render"
 	"log"
@@ -94,7 +95,8 @@ func (m *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err.Error())
+		helpers.ServerError(w, err)
+		return
 	}
 
 	reservation := models.Reservation{
@@ -130,7 +132,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
 	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
 	if !ok {
-		log.Println("cannot get item from session")
+		m.App.ErrorLog.Println("cannot get item from session")
 		m.App.Session.Put(r.Context(), "error", "Can't get reservation form session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
@@ -151,7 +153,7 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	end := r.Form.Get("end")
 	_, err := w.Write([]byte(fmt.Sprintf("Start date is %s and end date is %s", start, end)))
 	if err != nil {
-		log.Fatal(err)
+		helpers.ServerError(w, err)
 	}
 
 }
@@ -168,13 +170,13 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 	}
 	out, err := json.MarshalIndent(resp, "", "	")
 	if err != nil {
-		log.Println(err.Error())
+		helpers.ServerError(w, err)
 	}
 	log.Println(string(out))
 	w.Header().Set("Content-Type", "application/json")
 	_, err = w.Write(out)
 	if err != nil {
-		log.Println(err.Error())
+		helpers.ServerError(w, err)
 	}
 
 }
