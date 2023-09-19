@@ -1,0 +1,2 @@
+sql("alter table public.reservation
+         rename to reservations;")

@@ -1,0 +1,2 @@
+alter table public.reservations
+    rename to reservation;

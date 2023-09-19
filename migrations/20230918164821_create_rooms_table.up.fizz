@@ -1,0 +1,6 @@
+create_table("rooms") {
+  t.Column("id","integer", {primary: true})
+  t.Column("room_name", "string", {"default":""})
+  t.Column("created_at", "timestamp", {})
+  t.Column("updated_at", "timestamp", {})
+}
