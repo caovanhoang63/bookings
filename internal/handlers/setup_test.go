@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/alexedwards/scs/v2"
 	"github.com/caovanhoang63/bookings/internal/config"
+	"github.com/caovanhoang63/bookings/internal/driver"
 	"github.com/caovanhoang63/bookings/internal/models"
 	"github.com/caovanhoang63/bookings/internal/render"
 	"github.com/go-chi/chi/v5"
@@ -62,6 +63,12 @@ func getRoutes() http.Handler {
 	session.Cookie.SameSite = http.SameSiteLaxMode
 
 	app.Session = session
+	//Connect to database
+	db, err := driver.ConnectSQL("host=localhost port=2345 dbname=bookings user=postgres password=12032004")
+	if err != nil {
+		log.Fatal("Cannot connect to database! Dying...")
+	}
+
 	//config logger
 	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	app.InfoLog = infoLog
@@ -69,7 +76,6 @@ func getRoutes() http.Handler {
 	errorLog = log.New(os.Stdout, "Error\t", log.Ldate|log.Ltime|log.Lshortfile)
 	app.ErrorLog = errorLog
 	var tc map[string]*template.Template
-	var err error
 	if app.UseCache {
 		tc, err = CreateTestTemplate()
 		if err != nil {
@@ -80,7 +86,7 @@ func getRoutes() http.Handler {
 
 	//Link AppConfig to components
 	render.NewTemplate(&app)
-	Repo := NewRepo(&app)
+	Repo := NewRepo(&app, db)
 	NewHandlers(Repo)
 
 	mux := chi.NewMux()
