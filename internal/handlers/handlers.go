@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/caovanhoang63/bookings/internal/config"
+	"github.com/caovanhoang63/bookings/internal/driver"
 	"github.com/caovanhoang63/bookings/internal/forms"
 	"github.com/caovanhoang63/bookings/internal/helpers"
 	"github.com/caovanhoang63/bookings/internal/models"
 	"github.com/caovanhoang63/bookings/internal/render"
+	"github.com/caovanhoang63/bookings/internal/repository"
+	"github.com/caovanhoang63/bookings/internal/repository/dbrepo"
 	"log"
 	"net/http"
 )
@@ -18,12 +21,14 @@ var Repo *Repository
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 // NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 
@@ -41,9 +46,7 @@ func NewHandlers(r *Repository) {
 
 // Home is the home page handler for GET request
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-
 	render.RenderTemplate(w, r, "home.page.html", &models.TemplateData{})
-
 }
 
 // About is the about page handler for GET request

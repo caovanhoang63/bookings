@@ -1,9 +1,11 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/gob"
 	"github.com/alexedwards/scs/v2"
 	"github.com/caovanhoang63/bookings/internal/config"
+	"github.com/caovanhoang63/bookings/internal/driver"
 	"github.com/caovanhoang63/bookings/internal/handlers"
 	"github.com/caovanhoang63/bookings/internal/helpers"
 	"github.com/caovanhoang63/bookings/internal/models"
@@ -25,10 +27,16 @@ var errorLog *log.Logger
 func main() {
 	//run
 
-	err := run()
+	db, err := run()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer func(SQL *sql.DB) {
+		err := SQL.Close()
+		if err != nil {
+
+		}
+	}(db.SQL)
 
 	//Config server
 	srv := http.Server{
@@ -41,7 +49,7 @@ func main() {
 
 }
 
-func run() error {
+func run() (*driver.DB, error) {
 	//what put in the session`
 	gob.Register(models.Reservation{})
 
@@ -67,21 +75,28 @@ func run() error {
 
 	app.Session = session
 
+	//Connect to database
+	log.Println("Connecting to database...")
+	db, err := driver.ConnectSQL("host=localhost port=2345 dbname=bookings user=postgres password=12032004")
+	if err != nil {
+		log.Fatal("Cannot connect to database! Dying...")
+	}
+
 	var tc map[string]*template.Template
-	var err error
 	if app.UseCache {
 		tc, err = render.CreateTemplate()
 		if err != nil {
-			return err
+			log.Fatal(err)
+			return nil, err
 		}
 		app.TemplateCache = tc
 	}
 
 	//Link AppConfig to components
 	render.NewTemplate(&app)
-	Repo := handlers.NewRepo(&app)
+	Repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(Repo)
 	helpers.NewHelpers(&app)
 
-	return nil
+	return db, nil
 }
