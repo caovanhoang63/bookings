@@ -85,7 +85,7 @@ func getRoutes() http.Handler {
 	}
 
 	//Link AppConfig to components
-	render.NewTemplate(&app)
+	render.NewRenderer(&app)
 	Repo := NewRepo(&app, db)
 	NewHandlers(Repo)
 

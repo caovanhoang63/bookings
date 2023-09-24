@@ -21,8 +21,8 @@ var app *config.AppConfig
 
 var pathToTemplates = "./templates"
 
-// NewTemplate get App config from config to use in render
-func NewTemplate(a *config.AppConfig) {
+// NewRenderer get App config from config to use in render
+func NewRenderer(a *config.AppConfig) {
 	app = a
 }
 
@@ -38,8 +38,8 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	return td
 }
 
-// RenderTemplate get a html page and render it
-func RenderTemplate(w http.ResponseWriter, r *http.Request, html string, td *models.TemplateData) error {
+// Template get a html page and render it
+func Template(w http.ResponseWriter, r *http.Request, html string, td *models.TemplateData) error {
 	html = strings.Trim(html, " ")
 	var tc map[string]*template.Template //declare template cache
 	var err error

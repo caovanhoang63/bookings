@@ -93,7 +93,7 @@ func run() (*driver.DB, error) {
 	}
 
 	//Link AppConfig to components
-	render.NewTemplate(&app)
+	render.NewRenderer(&app)
 	Repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(Repo)
 	helpers.NewHelpers(&app)
