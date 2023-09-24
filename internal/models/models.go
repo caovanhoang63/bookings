@@ -4,15 +4,7 @@ import (
 	"time"
 )
 
-// Reservation is present reservation form
-type Reservation struct {
-	FirstName string
-	LastName  string
-	Email     string
-	Phone     string
-}
-
-type Users struct {
+type User struct {
 	ID          int
 	FirstName   string
 	LastName    string
@@ -23,21 +15,21 @@ type Users struct {
 	AccessLevel int
 }
 
-type Rooms struct {
+type Room struct {
 	ID        int
 	RoomName  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-type Restrictions struct {
+type Restriction struct {
 	ID              int
 	RestrictionName string
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
 }
 
-type Reservations struct {
+type Reservation struct {
 	ID        int
 	FirstName string
 	LastName  string
@@ -48,7 +40,7 @@ type Reservations struct {
 	RoomID    int
 	StartDate time.Time
 	EndDate   time.Time
-	Room      Rooms
+	Room      Room
 }
 
 type RoomRestrictions struct {
@@ -60,7 +52,7 @@ type RoomRestrictions struct {
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 	RestrictionID int
-	Room          Rooms
-	Restriction   Restrictions
-	Reservation   Reservations
+	Room          Room
+	Restriction   Restriction
+	Reservation   Reservation
 }
