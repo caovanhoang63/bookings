@@ -50,6 +50,20 @@
                                id="phone" autocomplete="true" type='tel'
                                name='phone' value="{{$res.Phone}}" required pattern="[0-9]{10}">
                     </div>
+                    <div class="row" id="reservation_dates">
+                        <div class="col form-group">
+                            <label for="start_date">Start Date: </label>
+                            <input class="form-control" id="start_date" name="start_date">
+                        </div>
+
+                        <div class="col form-group">
+                            <label for="end_date">Start Date: </label>
+                            <input class="form-control" id="end_date" name="end_date">
+                        </div>
+                    </div>
+
+
+                    <input id="room_id" name="room_id" value="1" type="hidden">
 
                     <hr>
                     <input type="submit" class="btn btn-primary" value="Make Reservation">
