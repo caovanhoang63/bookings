@@ -134,7 +134,8 @@
         // datepicker
         const elem = document.getElementById('reservation_dates');
         const datepicker = new DateRangePicker(elem, {
-            format: "dd-mm-yyyy"
+            format: "dd-mm-yyyy",
+            minDate: new Date(),
         });
 
         //notie

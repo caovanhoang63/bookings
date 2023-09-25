@@ -115,6 +115,11 @@ func (m *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
 
 // PostReservation handles the posing of a reservation form
 func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
+	if !ok {
+		helpers.ServerError(w, errors.New("cannot get data from session"))
+	}
+
 	err := r.ParseForm()
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -139,17 +144,12 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 	}
 
-	reservation := models.Reservation{
-		FirstName: r.Form.Get("first_name"),
-		LastName:  r.Form.Get("last_name"),
-		Email:     r.Form.Get("email"),
-		Phone:     r.Form.Get("phone"),
-		StartDate: startDate,
-		EndDate:   endDate,
-		RoomID:    roomID,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-	}
+	reservation.FirstName = r.Form.Get("first_name")
+	reservation.LastName = r.Form.Get("last_name")
+	reservation.Email = r.Form.Get("email")
+	reservation.Phone = r.Form.Get("phone")
+	reservation.CreatedAt = time.Now()
+	reservation.UpdatedAt = time.Now()
 
 	form := forms.New(r.PostForm)
 
@@ -208,8 +208,15 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 	data := make(map[string]interface{})
 	data["reservation"] = reservation
 
+	sd := reservation.StartDate.Format(dateTimeLayout)
+	ed := reservation.EndDate.Format(dateTimeLayout)
+	stringMap := make(map[string]string)
+	stringMap["start_date"] = sd
+	stringMap["end_date"] = ed
+
 	render.Template(w, r, "reservation-summary.page.html", &models.TemplateData{
-		Data: data,
+		Data:      data,
+		StringMap: stringMap,
 	})
 }
 
