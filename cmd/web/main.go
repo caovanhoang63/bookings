@@ -52,6 +52,9 @@ func main() {
 func run() (*driver.DB, error) {
 	//what put in the session`
 	gob.Register(models.Reservation{})
+	gob.Register(models.User{})
+	gob.Register(models.Room{})
+	gob.Register(models.Restriction{})
 
 	//config application
 	app.UseCache = true

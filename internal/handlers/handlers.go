@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/caovanhoang63/bookings/internal/config"
 	"github.com/caovanhoang63/bookings/internal/driver"
 	"github.com/caovanhoang63/bookings/internal/forms"
@@ -25,6 +24,9 @@ type Repository struct {
 	App *config.AppConfig
 	DB  repository.DatabaseRepo
 }
+
+// convert date's layout to dd/mm/yyyy
+const dateTimeLayout = "02-01-2006"
 
 // NewRepo creates a new repository
 func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
@@ -107,15 +109,12 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	sd := r.Form.Get("start_date")
 	ed := r.Form.Get("end_date")
 
-	//convert date's layout to dd/mm/yyyy
-	layout := "02-01-2006"
-
-	startDate, err := time.Parse(layout, sd)
+	startDate, err := time.Parse(dateTimeLayout, sd)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
 
-	endDate, err := time.Parse(layout, ed)
+	endDate, err := time.Parse(dateTimeLayout, ed)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
@@ -204,10 +203,41 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	start := r.Form.Get("start")
 	end := r.Form.Get("end")
-	_, err := w.Write([]byte(fmt.Sprintf("Start date is %s and end date is %s", start, end)))
+
+	startDate, err := time.Parse(dateTimeLayout, start)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
+	endDate, err := time.Parse(dateTimeLayout, end)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	rooms, err := m.DB.SearchAvailabilityForAllRoom(startDate, endDate)
+
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	if len(rooms) == 0 {
+		m.App.Session.Put(r.Context(), "error", "No availability")
+		http.Redirect(w, r, "search-availability", http.StatusSeeOther)
+		return
+	}
+
+	res := models.Reservation{
+		StartDate: startDate,
+		EndDate:   endDate,
+	}
+
+	data := make(map[string]interface{})
+	data["rooms"] = rooms
+
+	m.App.Session.Put(r.Context(), "reservation", res)
+
+	render.Template(w, r, "choose-room.page.html", &models.TemplateData{
+		Data: data,
+	})
 
 }
 
