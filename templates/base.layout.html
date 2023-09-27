@@ -131,33 +131,7 @@
                 })
         })()
 
-        // datepicker
-        const elem = document.getElementById('reservation_dates');
-        const datepicker = new DateRangePicker(elem, {
-            format: "dd-mm-yyyy",
-            minDate: new Date(),
-        });
-
-        //notie
-        function notify(msg, msgType) {
-            notie.alert({
-                type: msgType, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
-                text: msg,
-                position: 'top',
-            })
-        }
-
-        //modal
-        function notifyModal(title, text, icon, confirmButtonText) {
-            Swal.fire({
-                title: title,
-                text: text,
-                icon: icon,
-                confirmButtonText: confirmButtonText
-            })
-        }
-
-
+        let attention = Prompt();
 
         //Prompt model
         function Prompt() {
@@ -187,7 +161,7 @@
 
                 Toast.fire({})
             }
-            //success is the modal from SweetAlert2 with with icon Success
+            //success is the modal from SweetAlert2 with icon Success
             let success = function (c) {
                 const {
                     msg = "",
@@ -218,27 +192,26 @@
 
             async function custom(c) {
                 const {
+                    icon = "",
                     msg = "",
                     title = "",
-
+                    showConfirmButton = true,
                 } = c;
                 const { value: result } = await Swal.fire({
+                    showConfirmButton: showConfirmButton,
+                    icon: icon,
                     title: title,
                     html: msg,
                     backdrop: false,
                     focusConfirm: false,
                     showCancelButton: true,
                     customClass: {
-                        htmlContainer: 'overflowr-visible'
+                        htmlContainer: 'overflow-visible'
                     },
                     willOpen: () => {
-                        //datepicker
-                        const elem = document.getElementById('reservation-dates-modal');
-                        const datepicker = new DateRangePicker(elem, {
-                            format: "dd-mm-yyyy",
-                            showOnFocus: true,
-                            orientation: 'top',
-                        });
+                        if (c.willOpen !== undefined){
+                            c.willOpen();
+                        }
                     },
                     didOpen: () => {
                         document.getElementById('start').disabled = false;
@@ -278,32 +251,31 @@
                 custom: custom,
             }
         }
-
-        //Testing function
-        const test = document.getElementById('check-availability-button');
-        test.addEventListener('click', function () {
-            let html = `
-            <form id="check-availability-form" action="" method="post" novalidate class="needs-validation">
-                <div class="row">
-                    <div class="col">
-                        <div class="row" id="reservation-dates-modal">
-                            <div class="col">
-                                    <input disabled type="text" required class="form-control " id="start" name="start" placeholder="Arrival">
-                            </div>
-                            <div class="col">
-                                    <input disabled  type="text" required class="form-control " id="end" name="end" placeholder="Departure">
-                            </div>
-                        </div>
-
-                    <\div>
-                <\div>
-            </form> `;
-            Prompt().custom({
-                msg: html,
-                title: "Choose your date"
-            })
+        // datepicker
+        const elem = document.getElementById('reservation_dates');
+        const datepicker = new DateRangePicker(elem, {
+            format: "dd-mm-yyyy",
+            minDate: new Date(),
         });
-        //when someone go to the page popup the notification if there is a notification
+
+        //notie
+        function notify(msg, msgType) {
+            notie.alert({
+                type: msgType, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
+                text: msg,
+                position: 'top',
+            })
+        }
+
+        //modal
+        function notifyModal(title, text, icon, confirmButtonText) {
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: icon,
+                confirmButtonText: confirmButtonText
+            })
+        }
 
     </script>
 

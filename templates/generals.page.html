@@ -43,6 +43,7 @@
 
     <script>
         const checkAvailabilityButton = document.getElementById('check-availability-button');
+
         checkAvailabilityButton.addEventListener('click', function () {
             let html= `
                 <form id="check-availability-form" action="" method="post" novalidate class="needs-validation">
@@ -50,27 +51,34 @@
                         <div class="col">
                             <div class="row" id="reservation-dates-modal">
                                 <div class="col">
-                                    <input disabled type="text" required class="form-control " id="start" name="start" placeholder="Arrival">
+                                    <input disabled type="text" required class="form-control " id="start" name="start_date" placeholder="Arrival">
                                 </div>
                                 <div class="col">
-                                    <input disabled  type="text" required class="form-control " id="end" name="end" placeholder="Departure">
+                                    <input disabled  type="text" required class="form-control " id="end" name="end_date" placeholder="Departure">
                                 </div>
                             </div>
                         <\div>
                     <\div>
                 </form> `;
+
             Prompt().custom({
                 msg: html,
                 title: "Choose your date",
                 callback: function (result){
                     console.log("called")
-                    fetch("/search-availability-json")
+                    let form = document.getElementById('check-availability-form');
+                    let formData = new FormData(form);
+                    formData.append("csrf_token", "{{.CSRFToken}}");
+                    formData.append("room_id","1");
+                    fetch("/search-availability-json", {
+                        method: "POST",
+                        body: formData,
+                    })
                         .then(response => response.json())
                         .then(data => {
                             console.log(data.ok)
                             console.log(data.message)
                         })
-
                 }
             });
         });
