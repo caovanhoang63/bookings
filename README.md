@@ -1,7 +1,7 @@
 # bookings
 
 This is the repository for my bookings project.
-This project base on bookings and reservations project in an Udemy course names [Building Modern Web Applications with Go (Golang)](https://www.udemy.com/course/building-modern-web-applications-with-go/)
+
 
 - Build in Go version 1.21.0
 - Uses the [chi router v2.5.1](https://www.github.com/alexedwards/scs/v2)
